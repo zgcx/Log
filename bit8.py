@@ -2,7 +2,7 @@
 # @Last Modified Time    : 2020/12/8 8:05
 # @Author  : noodles
 # @File    : bit8.py
-# call bit8(...) to stretch the band to 8bit(0-255)
+# 标准差拉伸 call bit8(...) to stretch the band to 8bit(0-255)
 
 from osgeo import gdal
 import numpy as np
