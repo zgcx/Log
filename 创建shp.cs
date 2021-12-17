@@ -82,6 +82,9 @@ namespace Gdal2.Test
             //Feature f;
             //while ((f = lr2.GetNextFeature()) != null)
             //{
+            // 修改
+            // f.geo.Clone().TransformTo(sp);
+            // lyr.SetFeature(f);
             //    var value = f.GetFieldAsString(j);
             //    Console.WriteLine(value);
             //}
