@@ -1,5 +1,6 @@
-# 日常
-## Gdal读写
-gdb / shp
 
-标准差拉伸（numpy / cuda）
+# GDAL
+
+# 标准差拉伸（numpy/cuda）
+
+# 赫尔默特方差分量估计（numpy）
