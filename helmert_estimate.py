@@ -2,6 +2,7 @@
 
 import numpy as np
 
+# k=2
 B1 = np.array([[0.5532, -0.8100, 0, 0],
                [0.2434, 0.5528, 0, 0],
                [-0.7966, 0.2572, 0, 0],
@@ -43,13 +44,10 @@ while True:
     P2 = np.diag(sita2 * np.ones(n_obs2))
     P = np.diag(np.hstack((sita1 * np.ones(n_obs1), sita2 * np.ones(n_obs2))))
 
-    N = np.dot(B.T, P).dot(B)
     N1 = np.dot(B1.T, P1).dot(B1)
     N2 = np.dot(B2.T, P2).dot(B2)
-
+    N = np.dot(B.T, P).dot(B)
     W = np.dot(B.T, P).dot(L)
-    W1 = np.dot(B1.T, P1).dot(L1)
-    W2 = np.dot(B2.T, P2).dot(L2)
 
     N_ = np.linalg.inv(N)
     X = np.dot(N_, W)
@@ -58,16 +56,17 @@ while True:
 
     VV1 = np.dot(V1.T, P1).dot(V1)
     VV2 = np.dot(V2.T, P2).dot(V2)
-    VV = np.hstack((VV1, VV2)).T
 
-    # Helmert
+    # Helmert Matrix
     S = np.array([[n_obs1 - 2 * np.trace(N_ * N1) + np.trace(N_ * N1 * N_ * N1), np.trace(N_ * N1 * N_ * N2)],
                   [np.trace(N_ * N1 * N_ * N2), n_obs2 - 2 * np.trace(N_ * N2) + np.trace(N_ * N2 * N_ * N2)]])
-    sita = np.dot(np.linalg.inv(S), VV)
+    sita = np.dot(np.linalg.inv(S), np.hstack((VV1, VV2)).T)
     count += 1
     print("helmet进行次数{0}，单位权方差 {1} {2}，比值 {3}".format(count, sita[0], sita[1], sita[0] / sita[1]))
-    if abs(1 - min(sita) / max(sita)) < 0.01:
+    # loop out
+    if abs(max(sita)/min(sita)) - 1 < 0.01:
         break
 
+    # update
     sita[0] = sita[0] / sita1
     sita[1] = sita[1] / sita2
